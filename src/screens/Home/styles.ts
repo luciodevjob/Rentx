@@ -1,6 +1,8 @@
-import { FlatList } from 'react-native-gesture-handler';
+
+import { FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from  'styled-components/native';
+import { CarDTO } from '../../dtos/CarDTO';
 import theme from '../../styles/theme';
 
 export const Container = styled.View`
@@ -28,7 +30,7 @@ font-size: ${RFValue(15)}px;
 color: ${({ theme }) => theme.colors.text};
 
 `
-export const CarList = styled(FlatList).attrs({
+export const CarList = styled(FlatList as new () => FlatList<CarDTO>).attrs({
   contentContainerStyle: {
     padding: 24
   },

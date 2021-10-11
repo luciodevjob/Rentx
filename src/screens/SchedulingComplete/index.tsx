@@ -6,11 +6,16 @@ import DoneSvg from '../../assets/done.svg';
 import { Button } from '../../components/Button';
 import {useTheme} from 'styled-components'
 import { useNavigation } from '@react-navigation/native';
+
+
 export function SchedulingComplete(){
     const {width} = useWindowDimensions()
     const theme = useTheme()
+    
 
     const navigation = useNavigation()
+
+   
 
     function handleHome() {
       navigation.navigate("Home");

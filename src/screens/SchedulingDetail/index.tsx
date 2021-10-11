@@ -45,13 +45,17 @@ export function SchedulingDetail(){
   const theme = useTheme()
   const navigation = useNavigation()
 
+  function handleback() {
+    navigation.goBack()
+  }
+
   function handleComplete() {
-    navigation.navigate("Scheduling");
+    navigation.navigate("SchedulingComplete");
   }
   return (
     <Container>
         <Header>
-         <BackButton onPress={() => {}}/>
+         <BackButton onPress={handleback}/>
         </Header>
 
         <CarImages>
@@ -115,7 +119,7 @@ export function SchedulingDetail(){
         </Content>
         <Footer>
            <Button 
-           name="Escolher perioto do aluguel" 
+           name="Alugar agora!" 
            color={theme.colors.success}
            onPress={() => handleComplete()}
            />

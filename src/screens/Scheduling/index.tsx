@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BackButton } from '../../components/BackButton';
 import theme from '../../styles/theme';
 
@@ -7,15 +7,35 @@ import { Container, Header, Title, RentalPeirod, DateInfo, DateTitle, DateValue,
 import ArrowSvg from '../../assets/arrow.svg'; 
 import { StatusBar } from 'react-native';
 import { Button } from '../../components/Button';
-import { Calendar } from '../../components/Calendar';
+import { Calendar, DayProps, generateInterval, MarkedDateProps } from '../../components/Calendar';
 import { useNavigation } from '@react-navigation/native';
+
 export function Scheduling(){
 
+const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps)
+const [markedDates, setMarkedDates] = useState<MarkedDateProps>({} as MarkedDateProps)
 const navigation = useNavigation()
 
-function handleSchedulingComplete() {
-  navigation.navigate("SchedulingComplete");
+function handleSchedulingDetail() {
+  navigation.navigate("SchedulingDetail");
 }
+
+function handleback() {
+  navigation.goBack()
+}
+function handleChangeDate(date: DayProps) {
+ let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
+ let end = date;
+
+ if(start.timestamp > end.timestamp) {
+   start = end;
+   end = start;
+ }
+ setLastSelectedDate(end);
+ const interval = generateInterval(start, end);
+ setMarkedDates(interval)
+}
+
   return (
     <Container>
          <StatusBar
@@ -24,7 +44,7 @@ function handleSchedulingComplete() {
              translucent
       />
         <Header>
-        <BackButton color={theme.colors.background_secondary} onPress={() => {}}/>
+        <BackButton color={theme.colors.background_secondary} onPress={handleback}/>
             <Title>
                 Escolha uma {'\n'}
                 data de início e {'\n'}
@@ -48,11 +68,15 @@ function handleSchedulingComplete() {
         </Header>
         
         <Content>
-            <Calendar/>
+            <Calendar 
+            markedDates={markedDates}
+            onDayPress={handleChangeDate}
+
+            />
         </Content>
 
         <Footer>
-            <Button name="Confirmar" onPress={() =>  handleSchedulingComplete()}/>
+            <Button name="Confirmar" onPress={handleSchedulingDetail}/>
         </Footer>
 
     </Container>

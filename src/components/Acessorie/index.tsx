@@ -8,7 +8,7 @@ interface Props {
     icon: React.FC<SvgProps>
 }
 export function Acessorie({name, icon: Icon}: Props){
-  console.log(Icon);
+ 
   return (
 
     <Container>
